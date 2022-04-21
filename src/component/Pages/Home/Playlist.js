@@ -22,7 +22,7 @@ const Playlist = ({ url, title, artist, album, onClick, children }) => {
                 variant="outline-primary"
                 onClick={onClick}
               >
-                {children}
+                {children}  
               </Button>{' '}
             </div>
           </td>

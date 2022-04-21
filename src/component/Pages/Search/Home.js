@@ -9,6 +9,7 @@ import { setToken } from '../../../reducer/reducer';
 import Playlist from '../Home/Playlist';
 
 function Home() {
+
   const [search, setSearch] = useState('');
   const [isTrack, setTrack] = useState([]);
   const [selected, setSelected] = useState([]);
@@ -17,6 +18,54 @@ function Home() {
   const { token } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch((state) => state.auth);
+
+  const [user, setUser] = useState([]);
+
+  const [playlist, setPlaylist] = useState([]);
+
+  const [input, setInput] = useState({
+    title: '',
+    description: '',
+  });
+
+  // console.log(token);
+  useEffect(() => {
+    const getUser = async () => {
+      const response = await fetch('https://api.spotify.com/v1/me', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-type': 'application/json',
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => data);
+      setUser(response);
+    };
+    getUser();
+  }, [token]);
+
+  // menginput playlist dari api
+  const createPlaylist = (e) => {
+    e.preventDefault();
+    fetch(`https://api.spotify.com/v1/users/${user.id}/playlists`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: input.title,
+        description: input.description,
+        public: false,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setPlaylist(data);
+        console.log(data);
+      });
+  };
 
   const searchAlbums = async (e) => {
     e.preventDefault();
@@ -61,8 +110,9 @@ function Home() {
         album={item.album.name}
         onClick={() => handleSelect(item)}
       >
+
         {isTrack.isSelected ? 'Deselect' : 'Select'}
-        
+
       </Playlist>
     ));
   };
@@ -72,20 +122,65 @@ function Home() {
     window.localStorage.removeItem('token');
   };
 
+  const handlePlaylist = (e) => {
+    const { name, value } = e.target;
+    setInput({ ...input, [name]: value });
+  };
 
-  console.log(selected);
+
+  //console.log(selected);
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Spotify API</h1>
+        <h1>Spotify</h1>
         <div className="header">
           <Button className="btnLogout" variant="danger" onClick={logout}>
             Logout
           </Button>
         </div>
 
+        {/* For Form Create Playlist */}
+        <div className="container pt-5">
+          <div className="row justify-content-sm-center pt-5">
+            <div className="col-sm-6 shadow round pb-3">
+              <h1 className="text-center pt-3 text-secondary">Create Playlist</h1>
+              <form onSubmit={createPlaylist} >
+                <div className="form-group">
+                  <label className="col-form-label">Title:</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="title"
+                    placeholder="write a title"
+                    value={playlist.title}
+                    onChange={handlePlaylist}
+                    maxLength={10}
+                  />
+                </div>
+                <div className="form-group">
+                  <label className="col-form-label">Desciption:</label>
+                  <textarea
+                    type="text"
+                    className="form-control"
+                    placeholder="write a description"
+                    value={playlist.description}
+                    onChange={handlePlaylist}
+                  />
+                </div>
+                <Button
+                  className="btnSubmit"
+                  as="input"
+                  type="submit"
+                  value="Submit"
+                />{' '}
+              </form>
+            </div>
+          </div>
+        </div>
+
+        {/* For Search Bar */}
         <div className="search">
-           <Form style={{ width: '20rem' }} onSubmit={searchAlbums}>
+          <Form style={{ width: '20rem' }} onSubmit={searchAlbums}>
             <Form.Control
               type="text"
               placeholder="Search Your Music"
@@ -100,6 +195,7 @@ function Home() {
           </Form>
         </div>
 
+        {/* Track List */}
         <h1> Track List</h1>
         <div className="albums">
           {selected.map((item) => (
@@ -112,7 +208,12 @@ function Home() {
             />
           ))}
         </div>
-        <div>{itemList()}</div>
+
+        {/* Render ItemList for Selected album  */}
+        <div>
+          {itemList()}
+        </div>
+
       </header>
     </div>
 
