@@ -5,7 +5,7 @@ import { setToken } from '../../../reducer/reducer';
 import './auth.css';
 
 const CLIENT_ID = '33fd8c5db56e475dad870b2fda5e970b';
-const REDIRECT_URI = 'http://localhost:3000';
+const REDIRECT_URI = 'https://gigih-spotify-8gxoteiwj-dinarfairus.vercel.app/';
 const SCOPE = 'playlist-modify-private';
 
 export default function Auth() {
