@@ -12,4 +12,4 @@ Jethro, is a music application implementation of the spotify app
 ## How to install Jethro App
 Users only need to visit the link below 👇
 https://gigih-spotify-3dz8rri43-dinarfairus.vercel.app/ 
-and login/signup to enter the dashboard page 😊
+and login or signup to enter the dashboard page 😊
