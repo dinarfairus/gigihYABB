@@ -10,3 +10,6 @@ Jethro, is a music application implementation of the spotify app
 * Select Button, this feature is used by the user to detect which song has been selected, so that the user can select the song once
 
 ## How to install Jethro App
+Users only need to visit the link below 👇
+https://gigih-spotify-3dz8rri43-dinarfairus.vercel.app/ 
+and login/signup to enter the dashboard page 😊
