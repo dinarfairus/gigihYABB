@@ -8,9 +8,14 @@
 
 }
 
+.searchBar {
+  margin-top: 2rem; 
+}
+
 .btnLogout {
-  margin-bottom: 1rem;
-  float: left;
+display: flex;
+justify-content:left;
+float: left;
 }
 
 .btnSelected{
@@ -19,6 +24,10 @@
 }
 
 .btnSearch {
+  margin-top: 1rem;
+}
+
+.btnSubmit {
   margin-top: 1rem;
 }
 

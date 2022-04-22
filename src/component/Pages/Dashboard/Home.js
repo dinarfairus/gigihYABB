@@ -1,5 +1,5 @@
 import React from 'react';
-import './Search.css';
+import './Home.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -86,7 +86,7 @@ function Home() {
     const index = selected.find((item) => item.id === track.id);
     if (index) {
       setSelected(selected.filter((item) => item.id !== track.id));
-      console.log(selected);
+      
     } else {
       setSelected([...selected, track]);
     }
@@ -132,7 +132,7 @@ function Home() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Spotify</h1>
+        <h1>Jethro</h1>
         <div className="header">
           <Button className="btnLogout" variant="danger" onClick={logout}>
             Logout
@@ -142,7 +142,7 @@ function Home() {
         {/* For Form Create Playlist */}
         <div className="container pt-5">
           <div className="row justify-content-sm-center pt-5">
-            <div className="col-sm-6 shadow round pb-3">
+            <div className="col-sm-5 shadow round pb-3">
               <h1 className="text-center pt-3 text-secondary">Create Playlist</h1>
               <form onSubmit={createPlaylist} >
                 <div className="form-group">
@@ -151,7 +151,7 @@ function Home() {
                     type="text"
                     className="form-control"
                     name="title"
-                    placeholder="write a title"
+                    placeholder="Playlist Name"
                     value={playlist.title}
                     onChange={handlePlaylist}
                     maxLength={10}
@@ -162,7 +162,7 @@ function Home() {
                   <textarea
                     type="text"
                     className="form-control"
-                    placeholder="write a description"
+                    placeholder="Description"
                     value={playlist.description}
                     onChange={handlePlaylist}
                   />
@@ -182,6 +182,7 @@ function Home() {
         <div className="search">
           <Form style={{ width: '20rem' }} onSubmit={searchAlbums}>
             <Form.Control
+              className="searchBar"
               type="text"
               placeholder="Search Your Music"
               onChange={(e) => setSearch(e.target.value)}
@@ -196,9 +197,10 @@ function Home() {
         </div>
 
         {/* Track List */}
-        <h1> Track List</h1>
+        <h1> Songs </h1>
         <div className="albums">
           {selected.map((item) => (
+            
             <Playlist
               key={item.id}
               url={item.album.images[0].url}

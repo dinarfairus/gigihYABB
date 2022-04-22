@@ -3,7 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router';
 import Auth from '../component/Pages/Auth/Auth';
-import Home from '../component/Pages/Search/Home';
+import Home from '../component/Pages/Dashboard/Home';
 //import AddPlaylist from '../component/Pages/AddPlaylist/AddPlaylist';
 
 export default function AppRouter() {
